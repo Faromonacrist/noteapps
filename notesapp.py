@@ -59,7 +59,6 @@ def add_note():
         return
 
     try:
-        # Normalizuojame datą
         date = datetime.strptime(date_raw, "%m/%d/%Y").strftime("%m/%d/%Y")
     except ValueError:
         messagebox.showerror("Klaida", "Netinkamas datos formatas.")
