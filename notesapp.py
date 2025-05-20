@@ -8,14 +8,12 @@ from datetime import datetime
 from tkinter import messagebox
 
 FILENAME = "notes.json"
-PASSWORD = "123"
 current_theme = "litera"
 
 app = ttk.Window(themename=current_theme)
 app.title("🗒️ Užrašų aplikacija")
 app.geometry("600x800")
 
-# Login frame
 login_frame = ttk.Frame(app, padding=20)
 login_frame.pack(fill=BOTH, expand=YES)
 
@@ -25,7 +23,6 @@ password_entry.pack(pady=5)
 login_error_label = ttk.Label(login_frame, text="", bootstyle="danger")
 login_error_label.pack()
 
-# Main frame
 main_frame = ttk.Frame(app, padding=10)
 
 note_entry = None
@@ -99,7 +96,6 @@ def search_notes():
 
     notes = load_notes()
 
-    # Filtruojame pagal tekstą ir datą
     filtered = []
     for note in notes:
         text_match = query in note["text"].lower() if query else True
@@ -107,10 +103,8 @@ def search_notes():
         if text_match and date_match:
             filtered.append(note)
 
-    # Rikiuojame pagal datą (konvertuojam į datetime objektą)
     filtered.sort(key=lambda n: datetime.strptime(n["date"], "%m/%d/%Y"))
 
-    # Atvaizduojame
     notes_listbox.delete(0, "end")
     for i, note in enumerate(filtered, 1):
         notes_listbox.insert("end", f"{i}. [{note['date']}] {note['text']}")
@@ -136,10 +130,8 @@ def check_password():
         login_error_label.config(text="Neteisingas slaptažodis.")
 
 
-# Prisijungimo mygtukas
 ttk.Button(login_frame, text="Prisijungti", command=check_password, bootstyle=PRIMARY).pack(pady=10)
 
-# ------ MAIN FRAME TURINYS ------
 ttk.Label(main_frame, text="Naujas užrašas:", font='Helvetica 12 bold').pack(anchor=W)
 note_entry = ttk.Text(main_frame, height=4)
 note_entry.pack(fill=X, pady=5)
@@ -167,6 +159,5 @@ ttk.Button(main_frame, text="Ištrinti pažymėtą", command=delete_note, bootst
 ttk.Button(main_frame, text="Keisti temą", command=toggle_theme, bootstyle=SECONDARY).pack(fill=X)
 
 app.bind("<Escape>", lambda event: app.destroy())
-# Paleidžiam programą
 app.mainloop()
 "# test" 
